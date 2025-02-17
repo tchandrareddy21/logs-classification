@@ -1,0 +1,13 @@
+python-dotenv==1.0.1
+scikit-learn==1.6.1
+pandas==2.2.3
+sentence-transformers==3.4.1
+langchain==0.3.18
+langchain_core==0.3.35
+langchain_groq==0.2.4
+joblib==1.4.2
+fastapi==0.115.8
+streamlit==1.42.0
+requests==2.32.3
+
+-e .
