@@ -22,7 +22,6 @@ async def classify_logs(file: UploadFile):
         # df = pd.read_csv(io.StringIO(file.file.read().decode("utf-8")))
         content = await file.read()
         df = pd.read_csv(io.StringIO(content.decode("utf-8")))
-        print(df)
         if "source" not in df.columns or "log_message" not in df.columns:
             logging.error("Missing source and log_message columns in file.")
             raise HTTPException(status_code=400, detail="CSV must contain 'source' and 'log_message' columns.")
@@ -32,12 +31,12 @@ async def classify_logs(file: UploadFile):
         df["target_label"] = classify(list(zip(df["source"], df["log_message"])))
         logging.info("Classified successfully.")
 
-        print("Dataframe:", df.to_dict())
+        logging.info(f"Dataframe: {df.to_dict()}")
 
         # Save the modified file
         output_file = "classified_logs.csv"
         df.to_csv(output_file, index=False)
-        print("File saved to output.csv")
+        logging.info("File saved to classified_logs.csv")
         return FileResponse(output_file, media_type='text/csv')
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
