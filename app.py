@@ -4,10 +4,22 @@ import pandas as pd
 from exception import LoggerException
 from logger import logging
 import io, sys
+import subprocess
+import time
 
 FASTAPI_URL = "http://127.0.0.1:8000/classify/"
 
 st.title("Logs Classification App")
+
+# Function to start FastAPI in the background
+def start_fastapi():
+    if "fastapi_process" not in st.session_state:
+        st.session_state.fastapi_process = subprocess.Popen(["python", "fastapi_backend.py"])
+        time.sleep(3)  # Wait for FastAPI to start
+
+
+# Start FastAPI automatically
+start_fastapi()
 
 uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
 try:

@@ -2,6 +2,7 @@ import pandas as pd
 from fastapi import FastAPI, UploadFile, HTTPException
 from fastapi.responses import FileResponse
 from logger import logging
+import uvicorn
 from exception import  LoggerException
 from pipeline.classifier import classify
 import io
@@ -42,3 +43,6 @@ async def classify_logs(file: UploadFile):
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         file.file.close()
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
